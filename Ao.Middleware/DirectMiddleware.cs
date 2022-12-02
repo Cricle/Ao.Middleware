@@ -4,6 +4,10 @@ namespace Ao.Middleware
 {
     internal class DirectMiddleware<TContext> : IInvokable<TContext>
     {
+        private readonly Handler<TContext> next;
+
+        private readonly Handler<TContext> worker;
+
         public DirectMiddleware(Handler<TContext> worker, Handler<TContext> next)
         {
             this.worker = worker;
@@ -16,8 +20,5 @@ namespace Ao.Middleware
             await next(context);
         }
 
-        private readonly Handler<TContext> next;
-
-        private readonly Handler<TContext> worker;
     }
 }

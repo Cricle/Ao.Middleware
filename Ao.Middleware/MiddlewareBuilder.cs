@@ -10,11 +10,16 @@ namespace Ao.Middleware
             Handlers = new List<Func<Handler<TContext>, Handler<TContext>>>();
         }
 
+        public MiddlewareBuilder(IList<Func<Handler<TContext>, Handler<TContext>>> handlers)
+        {
+            Handlers = handlers;
+        }
+
         public IList<Func<Handler<TContext>, Handler<TContext>>> Handlers { get; }
 
         public virtual Handler<TContext> Build()
         {
-            var handler = EmptyHandler;
+            var handler = CreateEndPoint();
             for (int i = Handlers.Count - 1; i >= 0; i--)
             {
                 handler = Handlers[i](handler);
@@ -24,9 +29,7 @@ namespace Ao.Middleware
 
         public Handler<TContext> CreateEndPoint()
         {
-            return EmptyHandler;
+            return _ => ComplatedTasks.ComplatedTask;
         }
-
-        private readonly Handler<TContext> EmptyHandler = _ => ComplatedTasks.ComplatedTask;
     }
 }
