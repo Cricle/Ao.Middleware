@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Ao.Middleware
 {
@@ -8,26 +7,26 @@ namespace Ao.Middleware
     {
         public MiddlewareBuilder()
         {
-            this.Handlers = new List<Func<Handler<TContext>, Handler<TContext>>>();
+            Handlers = new List<Func<Handler<TContext>, Handler<TContext>>>();
         }
 
         public IList<Func<Handler<TContext>, Handler<TContext>>> Handlers { get; }
 
         public virtual Handler<TContext> Build()
         {
-            Handler<TContext> handler = CreateEndPoint();
-            foreach (var func in this.Handlers.Reverse())
+            var handler = CreateEndPoint();
+            for (int i = Handlers.Count - 1; i >= 0; i--)
             {
-                handler = func(handler);
+                handler += Handlers[i](handler);
             }
             return handler;
         }
 
         public Handler<TContext> CreateEndPoint()
         {
-            return (MiddlewareContext<TContext> context) => new NullEndPoint<TContext>().InvokeAsync(context, EmptyHandler);
+            return (context) => new NullEndPoint<TContext>().InvokeAsync(context, EmptyHandler);
         }
 
-        private readonly Handler<TContext> EmptyHandler = (MiddlewareContext<TContext> _) => ComplatedTasks.ComplatedTask;
+        private readonly Handler<TContext> EmptyHandler = _ => ComplatedTasks.ComplatedTask;
     }
 }

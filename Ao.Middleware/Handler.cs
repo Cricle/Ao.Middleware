@@ -2,5 +2,5 @@
 
 namespace Ao.Middleware
 {
-    public delegate Task Handler<TContext>(MiddlewareContext<TContext> context);
+    public delegate Task Handler<TContext>(TContext context);
 }

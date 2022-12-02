@@ -4,6 +4,6 @@ namespace Ao.Middleware
 {
     public interface IInvokable<TContext>
     {
-        Task InvokeAsync(MiddlewareContext<TContext> context);
+        Task InvokeAsync(TContext context);
     }
 }

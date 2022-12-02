@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Ao.Middleware
 {
@@ -11,7 +10,7 @@ namespace Ao.Middleware
             this.next = next;
         }
 
-        public async Task InvokeAsync(MiddlewareContext<TContext> context)
+        public async Task InvokeAsync(TContext context)
         {
             await worker(context);
             await next(context);

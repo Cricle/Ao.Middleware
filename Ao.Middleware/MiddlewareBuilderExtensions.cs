@@ -33,7 +33,7 @@ namespace Ao.Middleware
             {
                 throw new ArgumentNullException("middleware");
             }
-            builder.Use((Handler<TContext> next) => (MiddlewareContext<TContext> context) => middleware.InvokeAsync(context, next));
+            builder.Use((Handler<TContext> next) => (TContext context) => middleware.InvokeAsync(context, next));
         }
 
         public static void Use<TContext, TMiddleware>(this IMiddlewareBuilder<TContext> builder) where TMiddleware : class, IMiddleware<TContext>, new()
@@ -43,7 +43,7 @@ namespace Ao.Middleware
                 throw new ArgumentNullException("builder");
             }
             TMiddleware middleware = Activator.CreateInstance<TMiddleware>();
-            builder.Use((Handler<TContext> next) => (MiddlewareContext<TContext> context) => middleware.InvokeAsync(context, next));
+            builder.Use((Handler<TContext> next) => (TContext context) => middleware.InvokeAsync(context, next));
         }
 
         public static void Use<TContext>(this IMiddlewareBuilder<TContext> builder, Func<TContext, IMiddleware<TContext>> middlewareTypeGetter)
