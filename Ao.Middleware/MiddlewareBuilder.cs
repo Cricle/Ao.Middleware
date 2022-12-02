@@ -14,17 +14,17 @@ namespace Ao.Middleware
 
         public virtual Handler<TContext> Build()
         {
-            var handler = CreateEndPoint();
+            var handler = EmptyHandler;
             for (int i = Handlers.Count - 1; i >= 0; i--)
             {
-                handler += Handlers[i](handler);
+                handler = Handlers[i](handler);
             }
             return handler;
         }
 
         public Handler<TContext> CreateEndPoint()
         {
-            return (context) => new NullEndPoint<TContext>().InvokeAsync(context, EmptyHandler);
+            return EmptyHandler;
         }
 
         private readonly Handler<TContext> EmptyHandler = _ => ComplatedTasks.ComplatedTask;
