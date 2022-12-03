@@ -2,7 +2,7 @@
 
 namespace Ao.Middleware
 {
-    internal class DirectMiddleware<TContext> : IInvokable<TContext>
+    internal readonly struct DirectMiddleware<TContext> : IInvokable<TContext>
     {
         private readonly Handler<TContext> next;
 

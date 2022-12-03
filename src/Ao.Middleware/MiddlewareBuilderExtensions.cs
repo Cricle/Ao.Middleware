@@ -1,9 +1,37 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Ao.Middleware
 {
     public static class MiddlewareBuilderExtensions
     {
+        public static Handler<TContext> Build<TContext>(this IMiddlewareBuilder<TContext> builder)
+        {
+            Handler<TContext> handler = _ => ComplatedTasks.ComplatedTask;
+            for (int i = builder.Handlers.Count - 1; i >= 0; i--)
+            {
+                handler = builder.Handlers[i](handler);
+            }
+            return handler;
+        }
+        public static void Use<TContext>(this IMiddlewareBuilder<TContext> builder, Action<TContext> action)
+        {
+            if (builder is null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (action is null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            builder.Use((next) => new Handler<TContext>(new DirectMiddleware<TContext>(ctx =>
+            {
+                action(ctx);
+                return ComplatedTasks.ComplatedTask;
+            }, next).InvokeAsync));
+        }
         public static void Use<TContext>(this IMiddlewareBuilder<TContext> builder, Handler<TContext> action)
         {
             if (builder is null)
@@ -18,7 +46,20 @@ namespace Ao.Middleware
 
             builder.Use((next) => new Handler<TContext>(new DirectMiddleware<TContext>(action, next).InvokeAsync));
         }
+        public static IMiddlewareBuilder<TContext> Use<TContext>(this IMiddlewareBuilder<TContext> builder, Func<TContext, Handler<TContext>, Task> func)
+        {
+            if (builder is null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
 
+            if (func is null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
+
+            return builder.Use((next) => new Handler<TContext>((ctx) => func(ctx, next)));
+        }
         public static IMiddlewareBuilder<TContext> Use<TContext>(this IMiddlewareBuilder<TContext> builder, Func<Handler<TContext>, Handler<TContext>> func)
         {
             if (builder is null)
@@ -61,8 +102,7 @@ namespace Ao.Middleware
             {
                 throw new ArgumentNullException(nameof(middlewareTypeGetter));
             }
-
-            builder.Use((context) => middlewareTypeGetter(context));
+            builder.Use((Handler<TContext> handler) =>new Handler<TContext>(ctx => middlewareTypeGetter(ctx).InvokeAsync(ctx,handler)));
         }
     }
 }
