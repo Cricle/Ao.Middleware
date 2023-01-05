@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Ao.Middleware
 {
@@ -7,12 +10,17 @@ namespace Ao.Middleware
     {
         public static Handler<TContext> Build<TContext>(this IMiddlewareBuilder<TContext> builder)
         {
-            Handler<TContext> handler = _ => ComplatedTasks.ComplatedTask;
+            Handler<TContext> handler = EndPointAsync;
             for (int i = builder.Handlers.Count - 1; i >= 0; i--)
             {
                 handler = builder.Handlers[i](handler);
             }
             return handler;
+        }
+        [MethodImpl((MethodImplOptions)256)]
+        private static Task EndPointAsync<TContext>(TContext context)
+        {
+            return ComplatedTasks.ComplatedTask;
         }
         public static void Use<TContext>(this IMiddlewareBuilder<TContext> builder, Action<TContext> action)
         {
@@ -44,7 +52,7 @@ namespace Ao.Middleware
                 throw new ArgumentNullException(nameof(action));
             }
 
-            builder.Use((next) => new Handler<TContext>(new DirectMiddleware<TContext>(action, next).InvokeAsync));
+            builder.Use((next) => new DirectMiddleware<TContext>(action, next).InvokeAsync);
         }
         public static IMiddlewareBuilder<TContext> Use<TContext>(this IMiddlewareBuilder<TContext> builder, Func<TContext, Handler<TContext>, Task> func)
         {
