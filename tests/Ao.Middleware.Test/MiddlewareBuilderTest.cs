@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ao.Middleware.Test
+﻿namespace Ao.Middleware.Test
 {
     [TestClass]
     public class MiddlewareBuilderTest
@@ -17,8 +11,8 @@ namespace Ao.Middleware.Test
         [TestMethod]
         public void InitWithOther()
         {
-            var builder1= new MiddlewareBuilder<object>();
-            var builder2= new MiddlewareBuilder<object>(builder1.Handlers);
+            var builder1 = new MiddlewareBuilder<object>();
+            var builder2 = new MiddlewareBuilder<object>(builder1.Handlers);
             Assert.AreEqual(builder1.Handlers, builder2.Handlers);
         }
     }

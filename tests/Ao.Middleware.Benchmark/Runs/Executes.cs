@@ -6,7 +6,7 @@ namespace Ao.Middleware.Benchmark.Runs
     public class Executes
     {
         private Handler<object> handler;
-        private Func<object,Task> native;
+        private Func<object, Task> native;
         private object obj;
 
         [Params(100)]
@@ -22,14 +22,14 @@ namespace Ao.Middleware.Benchmark.Runs
             }
             handler = builder.Build();
             native = _ => Task.CompletedTask;
-            for (int i = 0; i < MiddlewareCount-1; i++)
+            for (int i = 0; i < MiddlewareCount - 1; i++)
             {
                 native += _ => Task.CompletedTask;
             }
             obj = new object();
         }
 
-        [Benchmark(Baseline =true)]
+        [Benchmark(Baseline = true)]
         public async Task Execute()
         {
             await handler(obj);

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Ao.Middleware
 {
@@ -110,7 +108,7 @@ namespace Ao.Middleware
             {
                 throw new ArgumentNullException(nameof(middlewareTypeGetter));
             }
-            builder.Use((Handler<TContext> handler) =>new Handler<TContext>(ctx => middlewareTypeGetter(ctx).InvokeAsync(ctx,handler)));
+            builder.Use((Handler<TContext> handler) => new Handler<TContext>(ctx => middlewareTypeGetter(ctx).InvokeAsync(ctx, handler)));
         }
     }
 }

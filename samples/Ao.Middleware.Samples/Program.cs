@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ao.Middleware.Samples
+﻿namespace Ao.Middleware.Samples
 {
     internal class Program
     {

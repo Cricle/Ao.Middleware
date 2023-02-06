@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace Ao.Middleware.Test
+﻿namespace Ao.Middleware.Test
 {
     [TestClass]
     public class MiddlewareBuilderExtensionsTest
@@ -41,7 +34,7 @@ namespace Ao.Middleware.Test
             public int Count { get; set; }
         }
 
-        private static async Task<int> Run(Action<MiddlewareBuilder<Sum>> action,int count)
+        private static async Task<int> Run(Action<MiddlewareBuilder<Sum>> action, int count)
         {
             var builder = new MiddlewareBuilder<Sum>();
             for (int i = 0; i < count; i++)
@@ -79,7 +72,7 @@ namespace Ao.Middleware.Test
         [DataRow(10)]
         public async Task UseByAsyncLambda(int count)
         {
-            Assert.AreEqual(count, await Run(x => x.Use(new Func<Sum, Handler<Sum>, Task>((s,next) =>
+            Assert.AreEqual(count, await Run(x => x.Use(new Func<Sum, Handler<Sum>, Task>((s, next) =>
             {
                 s.Count++;
                 return next(s);

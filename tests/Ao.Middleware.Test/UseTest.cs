@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ao.Middleware.Test
+﻿namespace Ao.Middleware.Test
 {
     [TestClass]
     public class UseTest
@@ -30,7 +24,7 @@ namespace Ao.Middleware.Test
                 });
             }
             var handler = builder.Build();
-            var s=new Sum();
+            var s = new Sum();
             await handler(s);
             Assert.AreEqual(10, s.A);
         }
