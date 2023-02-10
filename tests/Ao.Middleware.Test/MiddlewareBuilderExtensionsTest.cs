@@ -1,8 +1,11 @@
-﻿namespace Ao.Middleware.Test
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Ao.Middleware.Test
 {
     [TestClass]
     public class MiddlewareBuilderExtensionsTest
     {
+        [ExcludeFromCodeCoverage]
         class NullMiddleware<TContext> : IMiddleware<TContext>
         {
             public Task InvokeAsync(TContext context, Handler<TContext> next)

@@ -2,7 +2,7 @@
 
 namespace Ao.Middleware
 {
-    internal readonly struct DirectMiddleware<TContext> : IInvokable<TContext>
+    internal class DirectMiddleware<TContext> : IInvokable<TContext>
     {
         private readonly Handler<TContext> next;
 
@@ -13,12 +13,10 @@ namespace Ao.Middleware
             this.worker = worker;
             this.next = next;
         }
-
         public async Task InvokeAsync(TContext context)
         {
             await worker(context);
             await next(context);
         }
-
     }
 }
