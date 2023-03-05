@@ -3,4 +3,19 @@
 		<OutputType>Library</OutputType>
 		<TargetFrameworks>netstandard1.0;netstandard2.0;net6.0;net7.0</TargetFrameworks>
 	</PropertyGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+	  <PackageReference Include="Collections.Pooled">
+	    <Version>1.0.82</Version>
+	  </PackageReference>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+	  <PackageReference Include="Collections.Pooled">
+	    <Version>1.0.82</Version>
+	  </PackageReference>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+	  <PackageReference Include="Collections.Pooled">
+	    <Version>1.0.82</Version>
+	  </PackageReference>
+	</ItemGroup>
 </Project>

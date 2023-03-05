@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ao.Middleware.Samples", "sa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ao.Middleware.Benchmark", "tests\Ao.Middleware.Benchmark\Ao.Middleware.Benchmark.csproj", "{D330CDAA-072E-4746-B31B-4FD3B6442833}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ao.Middleware.Samples.Flows", "samples\Ao.Middleware.Samples.Flows\Ao.Middleware.Samples.Flows.csproj", "{13DE71C9-8AAB-432E-92BA-6777EEBC0E39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ao.Middleware.Samples.Flows", "samples\Ao.Middleware.Samples.Flows\Ao.Middleware.Samples.Flows.csproj", "{13DE71C9-8AAB-432E-92BA-6777EEBC0E39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ao.Middleware.DataWash", "src\Ao.Middleware.DataWash\Ao.Middleware.DataWash.csproj", "{210ED8CC-1B37-494D-8A6E-EF25C79EC7A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{13DE71C9-8AAB-432E-92BA-6777EEBC0E39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13DE71C9-8AAB-432E-92BA-6777EEBC0E39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13DE71C9-8AAB-432E-92BA-6777EEBC0E39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{210ED8CC-1B37-494D-8A6E-EF25C79EC7A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{210ED8CC-1B37-494D-8A6E-EF25C79EC7A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{210ED8CC-1B37-494D-8A6E-EF25C79EC7A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{210ED8CC-1B37-494D-8A6E-EF25C79EC7A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
