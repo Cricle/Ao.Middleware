@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
+    <ProjectReference Include="..\..\src\Ao.Middleware.DataWash\Ao.Middleware.DataWash.csproj" />
   </ItemGroup>
 
 </Project>
