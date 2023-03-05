@@ -2,19 +2,6 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;net6.0</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'!='netstandard1.0'">
-    <DefineConstants>$(DefineConstants);HIGHT_FW</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Super lightweight middleware.</Title>
-    <Authors>HCricle</Authors>
-    <Description>Super lightweight middleware for any things.</Description>
-    <Version>1.3.0</Version>
-    <PackageProjectUrl>https://github.com/Cricle/Ao.Middleware</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Cricle/Ao.Middleware</RepositoryUrl>
+    <TargetFrameworks>netstandard1.0;netstandard2.0;net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
 </Project>
