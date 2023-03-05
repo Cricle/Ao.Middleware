@@ -3,14 +3,11 @@ using System.Diagnostics;
 
 namespace Ao.Middleware.Samples.Flows
 {
-    internal class AnyWashContext : WashContext<int>
-    {
-    }
     internal class Program
     {
         static async Task Main(string[] args)
         {
-            var builder = new WashBuilder<AnyWashContext,int>();
+            var builder = new WashBuilder<WashContext<int>, int>();
             builder.WithDelegate(x =>
             {
                 x.MapData[1] = 123;
@@ -24,7 +21,7 @@ namespace Ao.Middleware.Samples.Flows
             var sw=Stopwatch.GetTimestamp();
             for (int i = 0; i < 1_000_000; i++)
             {
-                using (var ctx = new AnyWashContext())
+                using (var ctx = new WashContext<int>())
                 {
                     await handler(ctx);
                 }
