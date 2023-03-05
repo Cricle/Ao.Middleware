@@ -10,28 +10,13 @@ namespace Ao.Middleware.DataWash
     public class WashBuilder<TContext, TKey> : WashBuilder<TContext, TKey, object, object>
            where TContext : IWashContext<TKey, object, object>
     {
-        public WashBuilder()
-        {
-        }
-
-        public WashBuilder(IEnumerable<IWashUnit<TContext, TKey, object, object>> collection) : base(collection)
-        {
-        }
     }
     public class WashBuilder<TContext, TKey, TValue, TOutput> : List<IWashUnit<TContext, TKey, TValue, TOutput>>, IWashBuilder<TContext, TKey, TValue, TOutput>
            where TContext : IWashContext<TKey, TValue, TOutput>
     {
-        public WashBuilder()
-        {
-        }
-
-        public WashBuilder(IEnumerable<IWashUnit<TContext, TKey, TValue, TOutput>> collection) : base(collection)
-        {
-        }
-
         public WashHandler<TContext, TKey, TValue, TOutput> Build()
         {
-            if (Count==0)
+            if (Count == 0)
             {
                 return EmptyWashAsync;
             }

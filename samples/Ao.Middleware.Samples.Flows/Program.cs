@@ -1,39 +1,36 @@
 ﻿using Ao.Middleware.DataWash;
+using System.Diagnostics;
 
 namespace Ao.Middleware.Samples.Flows
 {
-    internal class AnyWashContext : WashContext<string>
+    internal class AnyWashContext : WashContext<int>
     {
-        public AnyWashContext()
-        {
-        }
-
-        public AnyWashContext(IEnumerable<IDataProvider<string, object>> collection) : base(collection)
-        {
-        }
     }
     internal class Program
     {
         static async Task Main(string[] args)
         {
-            var builder = new WashBuilder<AnyWashContext,string>();
+            var builder = new WashBuilder<AnyWashContext,int>();
             builder.WithDelegate(x =>
             {
-                x.MapData["a1"] = 123;
+                x.MapData[1] = 123;
             }).WithDelegate(x =>
             {
-                x.Outputs.Add(new DefaultColumnOutput<string, object>("a1", x["a1"]));
+                x.AddOutput(1, x.MapData[1]);
             });
 
-            var handler=builder.Build();
-            using (var ctx=new AnyWashContext())
+            var handler = builder.Build();
+            var gc = GC.GetTotalMemory(true);
+            var sw=Stopwatch.GetTimestamp();
+            for (int i = 0; i < 1_000_000; i++)
             {
-                await handler(ctx);
-                foreach (var item in ctx.Outputs)
+                using (var ctx = new AnyWashContext())
                 {
-                    Console.WriteLine(item);
+                    await handler(ctx);
                 }
             }
+            Console.WriteLine(new TimeSpan(Stopwatch.GetTimestamp()-sw));
+            Console.WriteLine($"{(GC.GetTotalMemory(false)-gc)/1024/1024.0}Mb");
         }
     }
 }

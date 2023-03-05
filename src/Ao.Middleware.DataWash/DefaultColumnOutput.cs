@@ -16,12 +16,12 @@ namespace Ao.Middleware.DataWash
 
         public bool Equals(IColumnOutput<TKey, TOutput>? other)
         {
-            if (other==null)
+            if (other == null)
             {
                 return false;
             }
-            return Equals(other.Key, Key)&&
-                Equals(other.Output,Output);
+            return Equals(other.Key, Key) &&
+                Equals(other.Output, Output);
         }
         public override int GetHashCode()
         {
@@ -29,7 +29,7 @@ namespace Ao.Middleware.DataWash
         }
         public override bool Equals(object? obj)
         {
-            if (obj is DefaultColumnOutput<TKey,TOutput> output)
+            if (obj is DefaultColumnOutput<TKey, TOutput> output)
             {
                 return Equals(output);
             }

@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using Collections.Pooled;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Ao.Middleware.DataWash
 {
-    public class DataProviderGroup<TKey, TValue> : List<IDataProvider<TKey, TValue>>, IDataProvider<TKey, TValue>
+    public class DataProviderGroup<TKey, TValue> : PooledList<IDataProvider<TKey, TValue>>, IDataProvider<TKey, TValue>
     {
         public DataProviderGroup()
         {
         }
 
-        public DataProviderGroup(IEnumerable<IDataProvider<TKey, TValue>> collection) : base(collection)
+        public DataProviderGroup(string name)
         {
+            Name = name;
         }
 
         public TValue this[TKey key]
