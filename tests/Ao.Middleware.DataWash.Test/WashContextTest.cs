@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ao.Middleware.DataWash.Test
+﻿namespace Ao.Middleware.DataWash.Test
 {
     [TestClass]
     public class WashContextTest

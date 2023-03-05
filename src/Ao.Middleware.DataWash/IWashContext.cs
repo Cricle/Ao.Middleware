@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ao.Middleware.DataWash
 {
     public static class WashContextAnyExtensions
     {
-        public static void AddOutput<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context,IColumnOutput<TKey,TOutput> output)
+        public static void AddOutput<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, IColumnOutput<TKey, TOutput> output)
         {
             context.Outputs.Add(output);
         }
-        public static void AddOutput<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, TKey key,TOutput output)
+        public static void AddOutput<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, TKey key, TOutput output)
         {
             AddOutput(context, new DefaultColumnOutput<TKey, TOutput>(key, output));
         }

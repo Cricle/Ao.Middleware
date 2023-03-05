@@ -19,7 +19,7 @@ namespace Ao.Middleware.DataWash
         {
             get
             {
-                if (TryGetValue(key,out var val))
+                if (TryGetValue(key, out var val))
                 {
                     return val;
                 }
@@ -30,21 +30,21 @@ namespace Ao.Middleware.DataWash
         public virtual string? Name { get; }
 
         public IEnumerable<TKey> Keys =>
-            Enumerable.SelectMany<IDataProvider<TKey, TValue>,TKey>(this, x => x.Keys);
+            Enumerable.SelectMany<IDataProvider<TKey, TValue>, TKey>(this, x => x.Keys);
 
         public IEnumerable<TValue> Values =>
             Enumerable.SelectMany<IDataProvider<TKey, TValue>, TValue>(this, x => x.Values);
 
         public bool ContainsKey(TKey key)
         {
-            return Enumerable.Any<IDataProvider<TKey, TValue>>(this,x=>x.ContainsKey(key));
+            return Enumerable.Any<IDataProvider<TKey, TValue>>(this, x => x.ContainsKey(key));
         }
 
         public bool TryGetValue(TKey key, out TValue value)
         {
             foreach (var item in this)
             {
-                if (item.TryGetValue(key,out value))
+                if (item.TryGetValue(key, out value))
                 {
                     return true;
                 }
@@ -55,7 +55,7 @@ namespace Ao.Middleware.DataWash
 
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
         {
-           return Enumerable.SelectMany<IDataProvider<TKey, TValue>, KeyValuePair<TKey, TValue>>(this, x => x).GetEnumerator();
+            return Enumerable.SelectMany<IDataProvider<TKey, TValue>, KeyValuePair<TKey, TValue>>(this, x => x).GetEnumerator();
         }
     }
 }

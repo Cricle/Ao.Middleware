@@ -1,18 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ao.Middleware.DataWash.Test
+﻿namespace Ao.Middleware.DataWash.Test
 {
     [TestClass]
     public class DataProviderGroupTest
     {
-        private DataProviderGroup<string,object> Datas()
+        private DataProviderGroup<string, object> Datas()
         {
-           return new DataProviderGroup<string, object>
+            return new DataProviderGroup<string, object>
             {
                 new PoolMapDataProvider<string, object>
                 {

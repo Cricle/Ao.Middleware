@@ -24,7 +24,7 @@ namespace Ao.Middleware.DataWash
         public IList<IColumnOutput<TKey, TOutput>> Outputs => outputs;
 
         public IDictionary<TKey, TValue> MapData => mapData;
-        
+
         public new void Dispose()
         {
             base.Dispose();

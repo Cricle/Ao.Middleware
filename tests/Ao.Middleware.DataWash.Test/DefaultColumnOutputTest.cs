@@ -1,12 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ao.Middleware.DataWash.Test
+﻿namespace Ao.Middleware.DataWash.Test
 {
     [TestClass]
     public class DefaultColumnOutputTest
@@ -14,7 +6,7 @@ namespace Ao.Middleware.DataWash.Test
         [TestMethod]
         public void EqualsHashCodeString()
         {
-            var a = new DefaultColumnOutput<int, int>(0,1);
+            var a = new DefaultColumnOutput<int, int>(0, 1);
             var b = new DefaultColumnOutput<int, int>(0, 1);
             var c = new DefaultColumnOutput<int, int>(1, 1);
 

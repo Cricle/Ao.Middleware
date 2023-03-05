@@ -16,7 +16,7 @@ namespace Ao.Middleware.DataWash
         {
         }
         public DelegateWashUnit(Func<TContext, Task> func)
-            :this((ctx,tk)=>func(ctx))
+            : this((ctx, tk) => func(ctx))
         {
         }
         public DelegateWashUnit(Func<TContext, CancellationToken, Task> func)
@@ -24,7 +24,7 @@ namespace Ao.Middleware.DataWash
             Func = func ?? throw new ArgumentNullException(nameof(func));
         }
 
-        public Func<TContext,CancellationToken,Task> Func { get; }
+        public Func<TContext, CancellationToken, Task> Func { get; }
 
         public Task WashAsync(TContext context, CancellationToken token = default)
         {

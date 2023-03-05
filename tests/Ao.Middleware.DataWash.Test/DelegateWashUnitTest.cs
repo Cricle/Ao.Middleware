@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ao.Middleware.DataWash.Test
+﻿namespace Ao.Middleware.DataWash.Test
 {
     [TestClass]
     public class DelegateWashUnitTest
@@ -29,7 +23,7 @@ namespace Ao.Middleware.DataWash.Test
         public async Task InitWithTokenAsync()
         {
             var a = 0;
-            await new DelegateWashUnit<WashContext<string>, string, object, object>((_,tk) =>
+            await new DelegateWashUnit<WashContext<string>, string, object, object>((_, tk) =>
             {
                 a++;
                 return Task.CompletedTask;

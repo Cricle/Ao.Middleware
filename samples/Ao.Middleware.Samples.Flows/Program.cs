@@ -18,7 +18,7 @@ namespace Ao.Middleware.Samples.Flows
 
             var handler = builder.Build();
             var gc = GC.GetTotalMemory(true);
-            var sw=Stopwatch.GetTimestamp();
+            var sw = Stopwatch.GetTimestamp();
             for (int i = 0; i < 1_000_000; i++)
             {
                 using (var ctx = new WashContext<int>())
@@ -26,8 +26,8 @@ namespace Ao.Middleware.Samples.Flows
                     await handler(ctx);
                 }
             }
-            Console.WriteLine(new TimeSpan(Stopwatch.GetTimestamp()-sw));
-            Console.WriteLine($"{(GC.GetTotalMemory(false)-gc)/1024/1024.0}Mb");
+            Console.WriteLine(new TimeSpan(Stopwatch.GetTimestamp() - sw));
+            Console.WriteLine($"{(GC.GetTotalMemory(false) - gc) / 1024 / 1024.0}Mb");
         }
     }
 }
