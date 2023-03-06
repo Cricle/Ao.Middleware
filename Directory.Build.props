@@ -4,7 +4,7 @@
     <Title>Super lightweight middleware.</Title>
     <Authors>HCricle</Authors>
     <Description>Super lightweight middleware for any things.</Description>
-    <Version>1.3.0</Version>
+    <Version>1.3.1</Version>
     <PackageProjectUrl>https://github.com/Cricle/Ao.Middleware</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Cricle/Ao.Middleware</RepositoryUrl>
   </PropertyGroup>

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ao.Middleware.Samples.Flows
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ao.Middleware.DataWash", "src\Ao.Middleware.DataWash\Ao.Middleware.DataWash.csproj", "{210ED8CC-1B37-494D-8A6E-EF25C79EC7A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ao.Middleware.DataWash.Test", "tests\Ao.Middleware.DataWash.Test\Ao.Middleware.DataWash.Test.csproj", "{B1CC7647-BE48-4357-A19C-317F1564B290}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ao.Middleware.DataWash.Test", "tests\Ao.Middleware.DataWash.Test\Ao.Middleware.DataWash.Test.csproj", "{B1CC7647-BE48-4357-A19C-317F1564B290}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
