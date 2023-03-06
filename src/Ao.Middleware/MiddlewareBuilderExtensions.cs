@@ -20,7 +20,7 @@ namespace Ao.Middleware
         {
             return ComplatedTasks.ComplatedTask;
         }
-        public static void Use<TContext>(this IMiddlewareBuilder<TContext> builder, Action<TContext> action)
+        public static IMiddlewareBuilder<TContext> Use<TContext>(this IMiddlewareBuilder<TContext> builder, Action<TContext> action)
         {
             if (builder is null)
             {
@@ -37,8 +37,9 @@ namespace Ao.Middleware
                 action(ctx);
                 return ComplatedTasks.ComplatedTask;
             }, next).InvokeAsync));
+            return builder;
         }
-        public static void Use<TContext>(this IMiddlewareBuilder<TContext> builder, Handler<TContext> action)
+        public static IMiddlewareBuilder<TContext> Use<TContext>(this IMiddlewareBuilder<TContext> builder, Handler<TContext> action)
         {
             if (builder is null)
             {
@@ -51,6 +52,7 @@ namespace Ao.Middleware
             }
 
             builder.Use((next) => new DirectMiddleware<TContext>(action, next).InvokeAsync);
+            return builder;
         }
         public static IMiddlewareBuilder<TContext> Use<TContext>(this IMiddlewareBuilder<TContext> builder, Func<TContext, Handler<TContext>, Task> func)
         {
@@ -82,7 +84,7 @@ namespace Ao.Middleware
             return builder;
         }
 
-        public static void Use<TContext>(this IMiddlewareBuilder<TContext> builder, IMiddleware<TContext> middleware)
+        public static IMiddlewareBuilder<TContext> Use<TContext>(this IMiddlewareBuilder<TContext> builder, IMiddleware<TContext> middleware)
         {
             if (builder is null)
             {
@@ -95,9 +97,10 @@ namespace Ao.Middleware
             }
 
             builder.Use((next) => (context) => middleware.InvokeAsync(context, next));
+            return builder;
         }
 
-        public static void Use<TContext>(this IMiddlewareBuilder<TContext> builder, Func<TContext, IMiddleware<TContext>> middlewareTypeGetter)
+        public static IMiddlewareBuilder<TContext> Use<TContext>(this IMiddlewareBuilder<TContext> builder, Func<TContext, IMiddleware<TContext>> middlewareTypeGetter)
         {
             if (builder is null)
             {
@@ -109,6 +112,7 @@ namespace Ao.Middleware
                 throw new ArgumentNullException(nameof(middlewareTypeGetter));
             }
             builder.Use((Handler<TContext> handler) => new Handler<TContext>(ctx => middlewareTypeGetter(ctx).InvokeAsync(ctx, handler)));
+            return builder;
         }
     }
 }

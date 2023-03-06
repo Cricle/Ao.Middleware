@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Ao.Middleware.DataWash
 {
@@ -20,5 +21,7 @@ namespace Ao.Middleware.DataWash
         IList<IDataProvider<TKey, TValue>> DataProviders { get; }
 
         IList<IColumnOutput<TKey, TOutput>> Outputs { get; }
+
+        CancellationToken Token { get; }
     }
 }

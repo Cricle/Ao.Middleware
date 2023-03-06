@@ -1,7 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace Ao.Middleware.DataWash
 {
+    public class ColumnOutputWashContextConverter<TKey,TSame> : ColumnOutputWashContextConverter<TKey, TSame, TSame>
+    {
+        public static readonly ColumnOutputWashContextConverter<TKey, TSame> Instance = new ColumnOutputWashContextConverter<TKey, TSame>();
+
+        private ColumnOutputWashContextConverter()
+        {
+        }
+        protected override IWashContext<TKey, TSame, TSame> CreateContext()
+        {
+            return new WashContext<TKey,TSame,TSame>();
+        }
+        protected override TSame Convert(TSame output)
+        {
+            return output;
+        }
+    }
     public abstract class ColumnOutputWashContextConverter<TKey, TValue, TOutput> : IColumnOutputConverter<TKey, TOutput, IWashContext<TKey, TValue, TOutput>>
     {
         public IWashContext<TKey, TValue, TOutput> Convert(IReadOnlyList<IColumnOutput<TKey, TOutput>> outputs)

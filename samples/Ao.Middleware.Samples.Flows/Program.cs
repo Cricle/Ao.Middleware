@@ -7,11 +7,11 @@ namespace Ao.Middleware.Samples.Flows
     {
         static async Task Main(string[] args)
         {
-            var builder = new WashBuilder<WashContext<int>, int>();
-            builder.WithDelegate(x =>
+            var builder = new MiddlewareBuilder<WashContext<int>>();
+            builder.Use(x =>
             {
                 x.MapData[1] = 123;
-            }).WithDelegate(x =>
+            }).Use(x =>
             {
                 x.AddOutput(1, x.MapData[1]);
             });
