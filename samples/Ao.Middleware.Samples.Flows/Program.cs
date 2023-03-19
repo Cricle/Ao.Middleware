@@ -5,9 +5,9 @@ namespace Ao.Middleware.Samples.Flows
 {
     internal class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            var builder = new MiddlewareBuilder<WashContext<int>>();
+            var builder = new SyncMiddlewareBuilder<WashContext<int>>();
             builder.Use(x =>
             {
                 x.MapData[1] = 123;
@@ -23,7 +23,7 @@ namespace Ao.Middleware.Samples.Flows
             {
                 using (var ctx = new WashContext<int>())
                 {
-                    await handler(ctx);
+                    handler(ctx);
                 }
             }
             Console.WriteLine(new TimeSpan(Stopwatch.GetTimestamp() - sw));

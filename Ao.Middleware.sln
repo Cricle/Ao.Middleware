@@ -21,6 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ao.Middleware.DataWash", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ao.Middleware.DataWash.Test", "tests\Ao.Middleware.DataWash.Test\Ao.Middleware.DataWash.Test.csproj", "{B1CC7647-BE48-4357-A19C-317F1564B290}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{46158D76-AFDF-4D5B-9F23-A7CD8EE11423}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
