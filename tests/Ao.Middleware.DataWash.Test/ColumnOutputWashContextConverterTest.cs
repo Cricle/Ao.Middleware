@@ -1,10 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Ao.Middleware.DataWash.Test
 {
@@ -24,7 +18,7 @@ namespace Ao.Middleware.DataWash.Test
         {
             protected override IWashContext<TKey, object, object> CreateContext()
             {
-                return new NullWashContext<TKey, object,object>();
+                return new NullWashContext<TKey, object, object>();
             }
 
             protected override object Convert(object output)
@@ -54,9 +48,9 @@ namespace Ao.Middleware.DataWash.Test
                 new DefaultColumnOutput<string, object>("a1",1),
                 new DefaultColumnOutput<string, object>("a2",2),
             };
-            var res = ColumnOutputWashContextConverter<string,object>.Instance.Convert(outputs);
+            var res = ColumnOutputWashContextConverter<string, object>.Instance.Convert(outputs);
             Assert.IsInstanceOfType(res, typeof(WashContext<string, object, object>));
-            var wres=(WashContext<string, object, object>)res;
+            var wres = (WashContext<string, object, object>)res;
             Assert.AreEqual(2, wres.MapData.Count);
             Assert.AreEqual(1, wres.MapData["a1"]);
             Assert.AreEqual(2, wres.MapData["a2"]);
@@ -70,7 +64,7 @@ namespace Ao.Middleware.DataWash.Test
                 new DefaultColumnOutput<int, string>(2,"3"),
             };
             var res = new IntColumnOutputWashContextConverter<int>().Convert(outputs);
-            Assert.IsInstanceOfType(res, typeof(WashContext<int,int,string>));
+            Assert.IsInstanceOfType(res, typeof(WashContext<int, int, string>));
             var wres = (WashContext<int, int, string>)res;
             Assert.AreEqual(2, wres.MapData.Count);
             Assert.AreEqual(2, wres.MapData[1]);

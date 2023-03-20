@@ -12,7 +12,7 @@ namespace Ao.Middleware.Benchmark.Runs
 
         [Params(100)]
         public int MiddlewareCount { get; set; }
-        private int a,b,c;
+        private int a, b, c;
         [GlobalSetup]
         public void Setup()
         {

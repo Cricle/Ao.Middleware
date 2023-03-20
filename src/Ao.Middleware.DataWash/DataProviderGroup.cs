@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Ao.Middleware.DataWash
 {
-    public class DataProviderGroup<TKey, TValue> : PooledList<IDataProvider<TKey, TValue>>, IDataProvider<TKey, TValue>,IDataProviderCollection<TKey, TValue>
+    public class DataProviderGroup<TKey, TValue> : PooledList<IDataProvider<TKey, TValue>>, IDataProvider<TKey, TValue>, IDataProviderCollection<TKey, TValue>
     {
         public DataProviderGroup()
         {

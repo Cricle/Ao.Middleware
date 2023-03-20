@@ -8,7 +8,7 @@ namespace Ao.Middleware.DataWash
     public class WashContext<TKey> : WashContext<TKey, object, object>
     {
         public WashContext(CancellationToken token = default)
-            :base(token)
+            : base(token)
         {
 
         }

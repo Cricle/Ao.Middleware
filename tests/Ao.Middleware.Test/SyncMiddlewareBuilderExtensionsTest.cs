@@ -18,10 +18,10 @@ namespace Ao.Middleware.Test
         {
             var builder = new SyncMiddlewareBuilder<int>();
 
-            Assert.ThrowsException<ArgumentNullException>(() => SyncMiddlewareBuilderExtensions.Use(null, (SyncHandler<int> _) => {}));
+            Assert.ThrowsException<ArgumentNullException>(() => SyncMiddlewareBuilderExtensions.Use(null, (SyncHandler<int> _) => { }));
             Assert.ThrowsException<ArgumentNullException>(() => SyncMiddlewareBuilderExtensions.Use(null, new NullMiddleware<int>()));
             Assert.ThrowsException<ArgumentNullException>(() => SyncMiddlewareBuilderExtensions.Use(null, (Func<SyncHandler<int>, SyncHandler<int>>)(_ => _)));
-            Assert.ThrowsException<ArgumentNullException>(() => SyncMiddlewareBuilderExtensions.Use(null, (Action<int, SyncHandler<int>>)((_, __) => {})));
+            Assert.ThrowsException<ArgumentNullException>(() => SyncMiddlewareBuilderExtensions.Use(null, (Action<int, SyncHandler<int>>)((_, __) => { })));
             Assert.ThrowsException<ArgumentNullException>(() => SyncMiddlewareBuilderExtensions.Use(null, (Func<int, ISyncMiddleware<int>>)(_ => new NullMiddleware<int>())));
 
             Assert.ThrowsException<ArgumentNullException>(() => SyncMiddlewareBuilderExtensions.Use(builder, (SyncHandler<int>?)null));

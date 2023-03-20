@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Net.Http.Headers;
 
 namespace Ao.Middleware.DataWash
 {
-    public class ColumnOutputWashContextConverter<TKey,TSame> : ColumnOutputWashContextConverter<TKey, TSame, TSame>
+    public class ColumnOutputWashContextConverter<TKey, TSame> : ColumnOutputWashContextConverter<TKey, TSame, TSame>
     {
         public static readonly ColumnOutputWashContextConverter<TKey, TSame> Instance = new ColumnOutputWashContextConverter<TKey, TSame>();
 
@@ -12,7 +11,7 @@ namespace Ao.Middleware.DataWash
         }
         protected override IWashContext<TKey, TSame, TSame> CreateContext()
         {
-            return new WashContext<TKey,TSame,TSame>();
+            return new WashContext<TKey, TSame, TSame>();
         }
         protected override TSame Convert(TSame output)
         {
@@ -24,7 +23,7 @@ namespace Ao.Middleware.DataWash
         public IWashContext<TKey, TValue, TOutput> Convert(IReadOnlyList<IColumnOutput<TKey, TOutput>> outputs)
         {
             var ctx = CreateContext();
-            if (ctx is IWithMapDataProviderWashContext<TKey,TValue> mapDataCtx)
+            if (ctx is IWithMapDataProviderWashContext<TKey, TValue> mapDataCtx)
             {
                 foreach (var item in outputs)
                 {

@@ -4,6 +4,14 @@
     public class WashContextAnyExtensionsTest
     {
         [TestMethod]
+        public void GetOrDefault()
+        {
+            var ctx = new WashContext<int>();
+            ctx.MapData[1] = 123;
+            Assert.IsNull(ctx.GetOrDefault("aaa", 1));
+            Assert.AreEqual(123, ctx.GetOrDefault(null, 1));
+        }
+        [TestMethod]
         public void TryGet_Nothing()
         {
             var ctx = new WashContext<int>();
@@ -17,11 +25,11 @@
             var ctx = new WashContext<int>();
             ctx.DataProviders.Add(new PoolMapDataProvider<int, object>("aaa")
             {
-                [1]=123
+                [1] = 123
             });
             var res = ctx.TryGet("aaa", 1, out var val);
             Assert.IsTrue(res);
-            Assert.AreEqual(123,val);
+            Assert.AreEqual(123, val);
         }
         [TestMethod]
         public void TryGet_NoNamed()
