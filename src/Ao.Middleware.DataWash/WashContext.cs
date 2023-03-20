@@ -26,8 +26,6 @@ namespace Ao.Middleware.DataWash
         private readonly PooledList<IColumnOutput<TKey, TOutput>> outputs;
         private readonly PoolMapDataProvider<TKey, TValue> mapData;
 
-        public IList<IDataProvider<TKey, TValue>> DataProviders => this;
-
         public IList<IColumnOutput<TKey, TOutput>> Outputs => outputs;
 
         public IDictionary<TKey, TValue> MapData => mapData;

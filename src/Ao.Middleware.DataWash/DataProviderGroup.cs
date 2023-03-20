@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Ao.Middleware.DataWash
 {
-    public class DataProviderGroup<TKey, TValue> : PooledList<IDataProvider<TKey, TValue>>, IDataProvider<TKey, TValue>
+    public class DataProviderGroup<TKey, TValue> : PooledList<IDataProvider<TKey, TValue>>, IDataProvider<TKey, TValue>,IDataProviderCollection<TKey, TValue>
     {
         public DataProviderGroup()
         {
@@ -34,6 +34,8 @@ namespace Ao.Middleware.DataWash
 
         public IEnumerable<TValue> Values =>
             Enumerable.SelectMany<IDataProvider<TKey, TValue>, TValue>(this, x => x.Values);
+
+        public IList<IDataProvider<TKey, TValue>> DataProviders => this;
 
         public bool ContainsKey(TKey key)
         {

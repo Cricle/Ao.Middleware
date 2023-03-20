@@ -8,13 +8,8 @@ namespace Ao.Middleware.Samples.Flows
         static void Main(string[] args)
         {
             var builder = new SyncMiddlewareBuilder<WashContext<int>>();
-            builder.Use(x =>
-            {
-                x.MapData[1] = 123;
-            }).Use(x =>
-            {
-                x.AddOutput(1, x.MapData[1]);
-            });
+            builder.Use(x => x.MapData[1] = 123)
+                .Use(x => x.AddOutput(1, x.MapData[1]));
 
             var handler = builder.Build();
             var gc = GC.GetTotalMemory(true);

@@ -5,10 +5,10 @@ namespace Ao.Middleware.Benchmark.Runs
     [MemoryDiagnoser]
     public class Executes
     {
-        private Handler<object> handler;
-        private SyncHandler<object> syncHandler;
-        private Func<object, Task> native;
-        private object obj;
+        private Handler<byte> handler;
+        private SyncHandler<byte> syncHandler;
+        private Func<byte, Task> native;
+        private byte obj;
 
         [Params(100)]
         public int MiddlewareCount { get; set; }
@@ -16,7 +16,7 @@ namespace Ao.Middleware.Benchmark.Runs
         [GlobalSetup]
         public void Setup()
         {
-            var builder = new MiddlewareBuilder<object>();
+            var builder = new MiddlewareBuilder<byte>();
             for (int i = 0; i < MiddlewareCount; i++)
             {
                 builder.Use(_ =>
@@ -26,10 +26,10 @@ namespace Ao.Middleware.Benchmark.Runs
                 });
             }
             handler = builder.Build();
-            var syncBuilder = new SyncMiddlewareBuilder<object>();
+            var syncBuilder = new SyncMiddlewareBuilder<byte>();
             for (int i = 0; i < MiddlewareCount; i++)
             {
-                syncBuilder.Use(new SyncHandler<object>(_ => { b++; }));
+                syncBuilder.Use(new SyncHandler<byte>(_ => { b++; }));
             }
             syncHandler = syncBuilder.Build();
             native = _ => Task.CompletedTask;
@@ -41,7 +41,7 @@ namespace Ao.Middleware.Benchmark.Runs
                     return Task.CompletedTask;
                 };
             }
-            obj = new object();
+            obj = 1;
         }
 
         [Benchmark(Baseline = true)]
