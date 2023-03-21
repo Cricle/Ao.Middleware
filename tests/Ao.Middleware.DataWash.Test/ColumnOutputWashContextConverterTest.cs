@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using Newtonsoft.Json.Linq;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Ao.Middleware.DataWash.Test
 {
@@ -16,27 +17,20 @@ namespace Ao.Middleware.DataWash.Test
         [ExcludeFromCodeCoverage]
         class NoDefaultColumnOutputWashContextConverter<TKey> : ColumnOutputWashContextConverter<TKey, object, object>
         {
-            protected override IWashContext<TKey, object, object> CreateContext()
-            {
-                return new NullWashContext<TKey, object, object>();
-            }
-
             protected override object Convert(object output)
             {
                 return output;
             }
         }
         [ExcludeFromCodeCoverage]
-        class NullWashContext<TKey, TValue, TOutput> : DataProviderGroup<TKey, TValue>, IWashContext<TKey, TValue, TOutput>
+        class NullWashContext<TKey, TValue, TOutput> : DataProviderGroup<TKey, TValue>, IWashContext<TKey, TValue, IList<IColumnOutput<TKey, TValue>>>
         {
             public NullWashContext()
             {
-                Outputs = new List<IColumnOutput<TKey, TOutput>>();
+                Outputs = new List<IColumnOutput<TKey, TValue>>();
             }
 
-            public IList<IDataProvider<TKey, TValue>> DataProviders => this;
-
-            public IList<IColumnOutput<TKey, TOutput>> Outputs { get; }
+            public IList<IColumnOutput<TKey, TValue>> Outputs { get; }
 
             public CancellationToken Token { get; }
         }

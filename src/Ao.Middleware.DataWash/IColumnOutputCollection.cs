@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Ao.Middleware.DataWash
+﻿namespace Ao.Middleware.DataWash
 {
-    public interface IColumnOutputCollection<TKey, TOutput>
+    public interface IColumnOutputCollection<TOutput>
     {
-        IList<IColumnOutput<TKey, TOutput>> Outputs { get; }
+        TOutput Outputs { get; }
     }
 }

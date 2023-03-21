@@ -1,4 +1,5 @@
 ﻿using Collections.Pooled;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace Ao.Middleware.DataWash
         {
         }
 
-        public DataProviderGroup(string name)
+        public DataProviderGroup(INamedInfo? name)
         {
             Name = name;
         }
@@ -27,7 +28,7 @@ namespace Ao.Middleware.DataWash
             }
         }
 
-        public virtual string? Name { get; }
+        public virtual INamedInfo? Name { get; }
 
         public IEnumerable<TKey> Keys =>
             Enumerable.SelectMany<IDataProvider<TKey, TValue>, TKey>(this, x => x.Keys);
@@ -58,6 +59,17 @@ namespace Ao.Middleware.DataWash
         IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
         {
             return Enumerable.SelectMany<IDataProvider<TKey, TValue>, KeyValuePair<TKey, TValue>>(this, x => x).GetEnumerator();
+        }
+
+        public new void Dispose()
+        {
+            foreach (var item in this)
+            {
+                if (item is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            }
         }
     }
 }

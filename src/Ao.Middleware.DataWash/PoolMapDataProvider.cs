@@ -8,11 +8,17 @@ namespace Ao.Middleware.DataWash
         {
         }
 
-        public PoolMapDataProvider(string? name)
+        public PoolMapDataProvider(INamedInfo? name)
         {
             Name = name;
         }
 
-        public string? Name { get; }
+        public PoolMapDataProvider(int capacity, INamedInfo? name) 
+            : base(capacity)
+        {
+            Name = name;
+        }
+
+        public INamedInfo? Name { get; }
     }
 }

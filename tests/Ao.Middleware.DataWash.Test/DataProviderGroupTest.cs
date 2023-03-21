@@ -20,8 +20,8 @@
         [TestMethod]
         public void Name()
         {
-            var group = new DataProviderGroup<string, object>("aaa");
-            Assert.AreEqual("aaa", group.Name);
+            var group = new DataProviderGroup<string, object>(new NamedInfo("aaa"));
+            Assert.AreEqual(new NamedInfo("aaa"), group.Name);
         }
         [TestMethod]
         public void Keys()

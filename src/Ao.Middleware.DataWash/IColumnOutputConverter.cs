@@ -2,25 +2,20 @@
 
 namespace Ao.Middleware.DataWash
 {
-    public class ColumnOutputWashContextConverter<TKey, TSame> : ColumnOutputWashContextConverter<TKey, TSame, TSame>
+    public class ColumnOutputWashContextConverter<TKey, TValue> : ColumnOutputWashContextConverter<TKey, TValue, TValue>
     {
-        public static readonly ColumnOutputWashContextConverter<TKey, TSame> Instance = new ColumnOutputWashContextConverter<TKey, TSame>();
+        public static readonly ColumnOutputWashContextConverter<TKey, TValue> Instance = new ColumnOutputWashContextConverter<TKey, TValue>();
 
-        private ColumnOutputWashContextConverter()
-        {
-        }
-        protected override IWashContext<TKey, TSame, TSame> CreateContext()
-        {
-            return new WashContext<TKey, TSame, TSame>();
-        }
-        protected override TSame Convert(TSame output)
+        private ColumnOutputWashContextConverter() { }
+
+        protected override TValue Convert(TValue output)
         {
             return output;
         }
     }
-    public abstract class ColumnOutputWashContextConverter<TKey, TValue, TOutput> : IColumnOutputConverter<TKey, TOutput, IWashContext<TKey, TValue, TOutput>>
+    public abstract class ColumnOutputWashContextConverter<TKey, TValue,TOutputValue>: IColumnOutputConverter<TKey, IReadOnlyList<IColumnOutput<TKey,TOutputValue>>,IWashContext<TKey,TValue, IReadOnlyList<IColumnOutput<TKey, TOutputValue>>>>
     {
-        public IWashContext<TKey, TValue, TOutput> Convert(IReadOnlyList<IColumnOutput<TKey, TOutput>> outputs)
+        public IWashContext<TKey, TValue, IReadOnlyList<IColumnOutput<TKey, TOutputValue>>> Convert(IReadOnlyList<IColumnOutput<TKey, TOutputValue>> outputs)
         {
             var ctx = CreateContext();
             if (ctx is IWithMapDataProviderWashContext<TKey, TValue> mapDataCtx)
@@ -41,16 +36,16 @@ namespace Ao.Middleware.DataWash
             }
             return ctx;
         }
-
-        protected virtual IWashContext<TKey, TValue, TOutput> CreateContext()
+        protected virtual IWashContext<TKey, TValue, IReadOnlyList<IColumnOutput<TKey, TOutputValue>>> CreateContext()
         {
-            return new WashContext<TKey, TValue, TOutput>();
+            return new WashContext<TKey, TValue, IReadOnlyList<IColumnOutput<TKey, TOutputValue>>>();
         }
 
-        protected abstract TValue Convert(TOutput output);
+        protected abstract TValue Convert(TOutputValue output);
+
     }
     public interface IColumnOutputConverter<TKey, TOutput, TReturn>
     {
-        TReturn Convert(IReadOnlyList<IColumnOutput<TKey, TOutput>> outputs);
+        TReturn Convert(TOutput outputs);
     }
 }
