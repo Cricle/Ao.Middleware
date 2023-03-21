@@ -43,8 +43,8 @@ namespace Ao.Middleware.DataWash.Test
                 new DefaultColumnOutput<string, object>("a2",2),
             };
             var res = ColumnOutputWashContextConverter<string, object>.Instance.Convert(outputs);
-            Assert.IsInstanceOfType(res, typeof(WashContext<string, object, object>));
-            var wres = (WashContext<string, object, object>)res;
+            Assert.IsInstanceOfType(res, typeof(WashContext<string, object, IList<IColumnOutput<string,object>>>));
+            var wres = (WashContext<string, object,  IList<IColumnOutput<string,object>>>)res;
             Assert.AreEqual(2, wres.MapData.Count);
             Assert.AreEqual(1, wres.MapData["a1"]);
             Assert.AreEqual(2, wres.MapData["a2"]);
@@ -58,8 +58,8 @@ namespace Ao.Middleware.DataWash.Test
                 new DefaultColumnOutput<int, string>(2,"3"),
             };
             var res = new IntColumnOutputWashContextConverter<int>().Convert(outputs);
-            Assert.IsInstanceOfType(res, typeof(WashContext<int, int, string>));
-            var wres = (WashContext<int, int, string>)res;
+            Assert.IsInstanceOfType(res, typeof(WashContext<int, int, IList<IColumnOutput<int, string>>>));
+            var wres = (WashContext<int, int, IList<IColumnOutput<int, string>>>)res;
             Assert.AreEqual(2, wres.MapData.Count);
             Assert.AreEqual(2, wres.MapData[1]);
             Assert.AreEqual(3, wres.MapData[2]);

@@ -13,9 +13,9 @@ namespace Ao.Middleware.DataWash
             return output;
         }
     }
-    public abstract class ColumnOutputWashContextConverter<TKey, TValue,TOutputValue>: IColumnOutputConverter<TKey, IReadOnlyList<IColumnOutput<TKey,TOutputValue>>,IWashContext<TKey,TValue, IReadOnlyList<IColumnOutput<TKey, TOutputValue>>>>
+    public abstract class ColumnOutputWashContextConverter<TKey, TValue,TOutputValue>: IColumnOutputConverter<TKey, IList<IColumnOutput<TKey,TOutputValue>>,IWashContext<TKey,TValue, IList<IColumnOutput<TKey, TOutputValue>>>>
     {
-        public IWashContext<TKey, TValue, IReadOnlyList<IColumnOutput<TKey, TOutputValue>>> Convert(IReadOnlyList<IColumnOutput<TKey, TOutputValue>> outputs)
+        public IWashContext<TKey, TValue, IList<IColumnOutput<TKey, TOutputValue>>> Convert(IList<IColumnOutput<TKey, TOutputValue>> outputs)
         {
             var ctx = CreateContext();
             if (ctx is IWithMapDataProviderWashContext<TKey, TValue> mapDataCtx)
@@ -36,9 +36,9 @@ namespace Ao.Middleware.DataWash
             }
             return ctx;
         }
-        protected virtual IWashContext<TKey, TValue, IReadOnlyList<IColumnOutput<TKey, TOutputValue>>> CreateContext()
+        protected virtual IWashContext<TKey, TValue, IList<IColumnOutput<TKey, TOutputValue>>> CreateContext()
         {
-            return new WashContext<TKey, TValue, IReadOnlyList<IColumnOutput<TKey, TOutputValue>>>();
+            return new WashContext<TKey, TValue, IList<IColumnOutput<TKey, TOutputValue>>>();
         }
 
         protected abstract TValue Convert(TOutputValue output);
