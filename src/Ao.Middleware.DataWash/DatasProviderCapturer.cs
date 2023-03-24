@@ -15,29 +15,34 @@ namespace Ao.Middleware.DataWash
 
         public bool Capture { get; }
 
-        public IDatasProvider<TKey, TValue>? CaptureDatasProvider { get; }
+        public IDatasProvider<TKey, TValue>? CaptureDatasProvider => captureDatasProvider;
 
-        public virtual bool AddCaptureDataProvider(IEnumerable<TKey> keys,IEnumerable<TValue> values)
+        public virtual IDataProvider<TKey, TValue>? CastCaptureDataProvider(IEnumerable<TKey> keys, IEnumerable<TValue> values)
         {
-            var m=new PoolMapDataProvider<TKey, TValue>();
-            using (var enuKey=keys.GetEnumerator())
-            using(var enuValue=values.GetEnumerator())
+            var m = new PoolMapDataProvider<TKey, TValue>();
+            using (var enuKey = keys.GetEnumerator())
+            using (var enuValue = values.GetEnumerator())
             {
-                while (enuKey.MoveNext()&&enuValue.MoveNext())
+                while (enuKey.MoveNext() && enuValue.MoveNext())
                 {
                     m[enuKey.Current] = enuValue.Current;
                 }
             }
+            return m;
+        }
+        public virtual IDataProvider<TKey, TValue>? AddCaptureDataProvider(IEnumerable<TKey> keys,IEnumerable<TValue> values)
+        {
+            var m = CastCaptureDataProvider(keys, values);
             return AddCaptureDataProvider(m);
         }
-        public virtual bool AddCaptureDataProvider(IDataProvider<TKey, TValue> dataProvider)
+        public virtual IDataProvider<TKey, TValue>? AddCaptureDataProvider(IDataProvider<TKey, TValue> dataProvider)
         {
             if (captureDatasProvider==null)
             {
-                return false;
+                return null;
             }
             captureDatasProvider.Add(dataProvider);
-            return true;
+            return dataProvider;
         }
 
         public void Dispose()

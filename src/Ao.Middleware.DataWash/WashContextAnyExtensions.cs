@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Ao.Middleware.DataWash
@@ -28,15 +27,10 @@ namespace Ao.Middleware.DataWash
             }
             return provider.TryGetValue(key, out value);
         }
-        public static void AddOutput<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, IColumnOutput<TKey, TValue> output)
-            where TOutput:IList<IColumnOutput<TKey,TValue>>
-        {
-            context.Outputs.Add(output);
-        }
         public static void AddOutput<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, TKey key, TValue output)
                   where TOutput : IList<IColumnOutput<TKey, TValue>>
         {
-            AddOutput(context, new DefaultColumnOutput<TKey, TValue>(key, output));
+            context.Outputs.Add(new DefaultColumnOutput<TKey, TValue>(key, output));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Ao.Middleware.DataWash
 {
@@ -31,6 +32,12 @@ namespace Ao.Middleware.DataWash
                 }
                 visitPos = value - 1;
             }
+        }
+
+        public Task LoadAsync()
+        {
+            while (Read() != null) ;
+            return Task.CompletedTask;
         }
 
         public IDataProvider<TKey, TValue>? Read()

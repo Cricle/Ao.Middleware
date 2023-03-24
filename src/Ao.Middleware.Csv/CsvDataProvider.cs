@@ -3,62 +3,76 @@ using CsvHelper;
 
 namespace Ao.Middleware.Csv
 {
-    public class CsvDataProvider : CsvDataProvider<string, object>
+    public class CsvDataProvider<TKey, TValue> : DatasProviderCapturer<TKey, TValue>, IDatasProvider<TKey, TValue>
     {
-        public CsvDataProvider(IReader csvReader, INamedInfo? name, bool capture) : base(csvReader, name, capture)
-        {
-        }
-
-        public override string ToKey(string key)
-        {
-            return key;
-        }
-
-        public override object ToValue(string? value)
-        {
-            return value;
-        }
-    }
-    public abstract class CsvDataProvider<TKey, TValue> : DatasProviderCapturer<TKey, TValue>, IDatasProvider<TKey, TValue>
-    {
-        public CsvDataProvider(IReader csvReader, INamedInfo? name, bool capture)
+        public CsvDataProvider(ICsvDataConverter<TKey, TValue> dataConverter,IReader csvReader, INamedInfo? name, bool capture)
             : base(capture)
         {
             Name = name;
             CsvReader = csvReader;
+            DataConverter = dataConverter;
         }
 
         public IReader CsvReader { get; }
 
         public INamedInfo? Name { get; }
 
+        public ICsvDataConverter<TKey, TValue> DataConverter { get; }
+
+        private IDataProvider<TKey, TValue>? currentDataProvider;
+    
+        private void DisposeCurrent()
+        {
+            if (currentDataProvider is IDisposable disposable)
+            {
+                disposable.Dispose(); 
+                currentDataProvider = null;
+            }
+        }
+
         protected override void OnDispose()
         {
+            DisposeCurrent();
             CsvReader.Dispose();
             GC.SuppressFinalize(this);
         }
-
+        
         public IDataProvider<TKey, TValue>? Read()
         {
             if (CsvReader.Read())
             {
+                if (CsvReader.HeaderRecord == null)
+                {
+                    if (CsvReader.ReadHeader())
+                    {
+                        CsvReader.Read();
+                    }
+                }
+                if (captureDatasProvider == null)
+                {
+                    DisposeCurrent();
+                }
+                currentDataProvider = CastCaptureDataProvider(CsvReader.HeaderRecord!.Select(x => DataConverter.KeyConverter.Convert(x)),
+                        Enumerable.Range(0, CsvReader.HeaderRecord.Length).Select(x => DataConverter.ValueConverter.Convert(CsvReader[x])));
                 if (captureDatasProvider != null)
                 {
-                    AddCaptureDataProvider(
-                        CsvReader.HeaderRecord.Select(x => ToKey(x)),
-                        Enumerable.Range(0, CsvReader.ColumnCount).Select(x => ToValue(CsvReader[x])));
+                   return AddCaptureDataProvider(currentDataProvider);
                 }
+                return currentDataProvider;
             }
             return null;
         }
 
         public bool Reset()
         {
+            DisposeCurrent();
             return false;
         }
 
-        public abstract TKey ToKey(string key);
-
-        public abstract TValue ToValue(string? value);
+        public Task LoadAsync()
+        {
+            while (Read() != null) ;
+            return Task.CompletedTask;
+        }
     }
 }

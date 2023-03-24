@@ -38,6 +38,13 @@ namespace Ao.Middleware.DataWash
 
         public IList<IDataProvider<TKey, TValue>> DataProviders => this;
 
+        public virtual IList<IDatasProvider<TKey, TValue>> DatasProviders => Array.Empty<IDatasProvider<TKey, TValue>>();
+
+        protected virtual IEnumerable<IDatasProvider<TKey, TValue>> GetDatasProviders()
+        {
+            yield break;
+        }
+
         public bool ContainsKey(TKey key)
         {
             return Enumerable.Any<IDataProvider<TKey, TValue>>(this, x => x.ContainsKey(key));

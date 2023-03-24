@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Ao.Middleware.DataWash
 {
@@ -7,7 +8,9 @@ namespace Ao.Middleware.DataWash
         bool Capture { get; }
 
         IDatasProvider<TKey, TValue>? CaptureDatasProvider { get; }
+        
+        IDataProvider<TKey, TValue>? CastCaptureDataProvider(IEnumerable<TKey> keys, IEnumerable<TValue> values);
 
-        bool AddCaptureDataProvider(IDataProvider<TKey, TValue> dataProvider);
+        IDataProvider<TKey, TValue>? AddCaptureDataProvider(IDataProvider<TKey, TValue> dataProvider);
     }
 }

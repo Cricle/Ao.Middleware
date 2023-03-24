@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Collections;
+using System.Threading.Tasks;
 
 namespace Ao.Middleware.DataWash
 {
@@ -165,6 +166,12 @@ namespace Ao.Middleware.DataWash
         public virtual bool Reset()
         {
             return false;
+        }
+
+        public Task LoadAsync()
+        {
+            while (Read() != null) ;
+            return Task.CompletedTask;
         }
     }
 
