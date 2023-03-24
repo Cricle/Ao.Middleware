@@ -1,25 +1,24 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Ao.Middleware.DataWash
 {
     public static class WashContextAnyExtensions
     {
-        public static TValue? GetOrDefault<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, INamedInfo? name, TKey key)
+        public static TValue? GetInputOrDefault<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, INamedInfo? name, TKey key)
         {
-            if (TryGet(context, name, key, out var val))
+            if (TryGetInput(context, name, key, out var val))
             {
                 return val;
             }
             return default;
         }
-        public static bool TryGet<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, INamedInfo? name, TKey key, out TValue? value)
+        public static bool TryGetInput<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, INamedInfo? name, TKey key, out TValue? value)
         {
-            if (name == null && context is IWithMapDataProviderWashContext<TKey, TValue> wc)
+            if (name == null)
             {
-                return wc.MapData.TryGetValue(key, out value);
+                return context.Inputs.MapData.TryGetValue(key, out value);
             }
-            var provider = context.DataProviders.FirstOrDefault(x => Equals(x.Name,name));
+            var provider = context.Inputs.DataProviders.FirstOrDefault(x => Equals(x.Name, name));
             if (provider == null)
             {
                 value = default;
@@ -27,10 +26,9 @@ namespace Ao.Middleware.DataWash
             }
             return provider.TryGetValue(key, out value);
         }
-        public static void AddOutput<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, TKey key, TValue output)
-                  where TOutput : IList<IColumnOutput<TKey, TValue>>
+        public static void AddOutput<TKey, TValue, TOutput>(this IWashContext<TKey, TValue, TOutput> context, TKey key, TOutput output)
         {
-            context.Outputs.Add(new DefaultColumnOutput<TKey, TValue>(key, output));
+            context.Outputs.MapData.Add(key, output);
         }
     }
 }

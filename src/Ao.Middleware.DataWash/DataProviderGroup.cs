@@ -5,16 +5,22 @@ using System.Linq;
 
 namespace Ao.Middleware.DataWash
 {
-    public class DataProviderGroup<TKey, TValue> : PooledList<IDataProvider<TKey, TValue>>, IDataProvider<TKey, TValue>, IDataProviderCollection<TKey, TValue>
+    public class DataProviderGroup<TKey, TValue> : PooledList<IDataProvider<TKey, TValue>>, IDataProvider<TKey, TValue>, IDataProviderCollection<TKey, TValue>, IDisposable
     {
         public DataProviderGroup()
+            : this(null)
         {
         }
 
         public DataProviderGroup(INamedInfo? name)
         {
             Name = name;
+            mapData = new PoolMapDataProvider<TKey, TValue>();
+            datasProviders = new PooledList<IDatasProvider<TKey, TValue>>();
+            Add(mapData);
         }
+        protected readonly PoolMapDataProvider<TKey, TValue> mapData;
+        protected readonly PooledList<IDatasProvider<TKey, TValue>> datasProviders;
 
         public TValue this[TKey key]
         {
@@ -38,12 +44,9 @@ namespace Ao.Middleware.DataWash
 
         public IList<IDataProvider<TKey, TValue>> DataProviders => this;
 
-        public virtual IList<IDatasProvider<TKey, TValue>> DatasProviders => Array.Empty<IDatasProvider<TKey, TValue>>();
+        public IList<IDatasProvider<TKey, TValue>> DatasProviders => datasProviders;
 
-        protected virtual IEnumerable<IDatasProvider<TKey, TValue>> GetDatasProviders()
-        {
-            yield break;
-        }
+        public IDictionary<TKey, TValue> MapData => mapData;
 
         public bool ContainsKey(TKey key)
         {
@@ -77,6 +80,12 @@ namespace Ao.Middleware.DataWash
                     disposable.Dispose();
                 }
             }
+            foreach (var item in datasProviders)
+            {
+                item.Dispose();
+            }
+            datasProviders.Dispose(); 
+            mapData.Dispose();
         }
     }
 }

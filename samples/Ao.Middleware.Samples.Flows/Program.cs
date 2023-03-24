@@ -15,24 +15,21 @@ namespace Ao.Middleware.Samples.Flows
             builder.Use(x =>
             {
                 x.MapData["1"] = 123;
-                var textReader = new StreamReader(File.OpenRead(Path.Combine(AppContext.BaseDirectory, "Res", "a.csv")));
-                x.Disposables.Add(textReader);
-                var reader =new CsvReader(textReader, new CsvConfiguration(CultureInfo.CurrentCulture));
-                x.Disposables.Add(reader);
                 var provider=x.AddCsv(CsvDataConverter.Instance,
-                    reader,
+                    Path.Combine(AppContext.BaseDirectory, "Res", "a.csv"),
                     new NamedInfo("csv")
                     ,true);
                 provider.LoadAsync().GetAwaiter().GetResult();
+                x.Outputs.DatasProviders.Add(provider);
             }).Use(x =>
             {
-                x.AddOutput("1", 1);
+                //x.AddOutput("1", 1);
             });
 
             var handler = builder.Build();
             var gc = GC.GetTotalMemory(true);
             var sw = Stopwatch.GetTimestamp();
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 using (var ctx = new WashContext<string>())
                 {
