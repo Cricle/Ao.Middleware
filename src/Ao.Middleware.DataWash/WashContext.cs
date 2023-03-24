@@ -6,14 +6,6 @@ using System.Threading;
 
 namespace Ao.Middleware.DataWash
 {
-    public class WashContext<TKey> : WashContext<TKey, object, object>
-    {
-        public WashContext(CancellationToken token = default)
-            :base(token)
-        {
-
-        }
-    }
     public class WashContext<TKey, TValue, TOutput> : DataProviderGroup<TKey, TValue>, IWashContext<TKey, TValue, TOutput>
     {
 #pragma warning disable CS8618

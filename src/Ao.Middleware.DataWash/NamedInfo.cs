@@ -43,11 +43,11 @@ namespace Ao.Middleware.DataWash
         {
             return !(left == right);
         }
-        public static implicit operator NamedInfo(string? name)
+        public static explicit operator NamedInfo(string? name)
         {
             return new NamedInfo(name);
         }
-        public static implicit operator string?(NamedInfo info)
+        public static explicit operator string?(NamedInfo info)
         {
             return info.Name;
         }

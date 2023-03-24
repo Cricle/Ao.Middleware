@@ -11,27 +11,17 @@ namespace Ao.Middleware.Samples.Flows
     {
         static void Main(string[] args)
         {
-            var builder = new SyncMiddlewareBuilder<WashContext<string>>();
-            builder.Use(x =>
-            {
-                x.MapData["1"] = 123;
-                var provider=x.AddCsv(CsvDataConverter.Instance,
+            var builder = new SyncMiddlewareBuilder<IWashContext<string,object?,object?>>();
+            builder.UseCsv(CsvDataConverter.Instance,
                     Path.Combine(AppContext.BaseDirectory, "Res", "a.csv"),
-                    new NamedInfo("csv")
-                    ,true);
-                provider.LoadAsync().GetAwaiter().GetResult();
-                x.Outputs.DatasProviders.Add(provider);
-            }).Use(x =>
-            {
-                //x.AddOutput("1", 1);
-            });
+                    new NamedInfo("csv"));
 
             var handler = builder.Build();
             var gc = GC.GetTotalMemory(true);
             var sw = Stopwatch.GetTimestamp();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100_000; i++)
             {
-                using (var ctx = new WashContext<string>())
+                using (var ctx = new WashContext<string,object?,object?>())
                 {
                     handler(ctx);
                 }

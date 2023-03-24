@@ -6,7 +6,7 @@ namespace Ao.Middleware.Csv
     {
         IDataConverter<string, TKey> KeyConverter { get; }
 
-        IDataConverter<object, TValue> ValueConverter { get; }
+        IDataConverter<object?, TValue> ValueConverter { get; }
 
     }
 }

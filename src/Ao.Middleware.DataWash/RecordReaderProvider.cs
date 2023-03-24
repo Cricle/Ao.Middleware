@@ -23,8 +23,6 @@ namespace Ao.Middleware.DataWash
 
         public IDataReader Reader { get; }
 
-        public INamedInfo? Name { get; }
-
         public virtual IEnumerable<TKey> Keys
         {
             get
@@ -48,10 +46,9 @@ namespace Ao.Middleware.DataWash
         protected TKey[]? NameKeys => nameKeys;
 
         protected RecordReaderProvider(IDataReader reader, INamedInfo? name, bool freezeHeader,bool captureDatasProvider)
-            :base(captureDatasProvider)
+            :base(name,captureDatasProvider)
         {
             Reader = reader;
-            Name = name;
             FreezeHeader = freezeHeader;
         }
 
@@ -114,7 +111,7 @@ namespace Ao.Middleware.DataWash
             }
         }
 
-        public IDataProvider<TKey, TValue>? Read()
+        protected override IDataProvider<TKey, TValue>? OnRead()
         {
             if (Reader.Read())
             {
@@ -126,17 +123,13 @@ namespace Ao.Middleware.DataWash
                         nameKeys[i] = ToKey(Reader.GetName(i));
                     }
                 }
-                if (captureDatasProvider!=null)
+                var provider = new PoolMapDataProvider<TKey, TValue>(Reader.FieldCount, null);
+                for (int i = 0; i < Reader.FieldCount; i++)
                 {
-                    var provider = new PoolMapDataProvider<TKey, TValue>(Reader.FieldCount,null);
-                    for (int i = 0; i < Reader.FieldCount; i++)
-                    {
-                        var key = nameKeys != null ? nameKeys[i] : ToKey(Reader.GetName(i));
-                        provider[key] = ToValue(Reader[i]);
-                    }
-                    AddCaptureDataProvider(provider);
+                    var key = nameKeys != null ? nameKeys[i] : ToKey(Reader.GetName(i));
+                    provider[key] = ToValue(Reader[i]);
                 }
-                return this;
+                return provider;
             }
             return null;
         }
@@ -163,15 +156,9 @@ namespace Ao.Middleware.DataWash
 
         public abstract TValue ToValue(object value);
 
-        public virtual bool Reset()
+        public override bool Reset()
         {
             return false;
-        }
-
-        public Task LoadAsync()
-        {
-            while (Read() != null) ;
-            return Task.CompletedTask;
         }
     }
 

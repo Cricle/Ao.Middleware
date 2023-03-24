@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ao.Middleware.DataWash\Ao.Middleware.DataWash.csproj" />
+    <ProjectReference Include="..\Ao.Middleware\Ao.Middleware.csproj" />
   </ItemGroup>
 
 </Project>
