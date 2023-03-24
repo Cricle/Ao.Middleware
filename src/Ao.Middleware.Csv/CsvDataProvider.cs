@@ -34,11 +34,5 @@ namespace Ao.Middleware.Csv
             }
             return null;
         }
-
-        public bool Reset()
-        {
-            DisposeCurrent();
-            return false;
-        }
     }
 }
