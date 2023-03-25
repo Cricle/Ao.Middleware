@@ -1,19 +1,17 @@
-﻿using Ao.Middleware.DataWash;
-
-namespace Ao.Middleware.Csv
+﻿namespace Ao.Middleware.DataWash
 {
-    public class CsvDataConverter : CsvDataConverter<string, object?>
+    public class StringObjectDataConverter : StringObjectDataConverter<string, object?>
     {
-        public static readonly CsvDataConverter Instance = new CsvDataConverter();
+        public static readonly StringObjectDataConverter Instance = new StringObjectDataConverter();
 
-        private CsvDataConverter() 
+        private StringObjectDataConverter()
             : base(EmptyDataConverter<string>.Instance, EmptyDataConverter<object?>.Instance, EmptyDataConverter<string>.Instance, EmptyDataConverter<object?>.Instance)
         {
         }
     }
-    public class CsvDataConverter<TKey, TValue> : ICsvDataConverter<TKey, TValue>
+    public class StringObjectDataConverter<TKey, TValue> : IStringObjectDataConverter<TKey, TValue>
     {
-        public CsvDataConverter(IDataConverter<string, TKey> keyConverter, IDataConverter<object?, TValue> valueConverter, IDataConverter<TKey, string> stringConverter, IDataConverter<TValue, object?> objectConverter)
+        public StringObjectDataConverter(IDataConverter<string, TKey> keyConverter, IDataConverter<object?, TValue> valueConverter, IDataConverter<TKey, string> stringConverter, IDataConverter<TValue, object?> objectConverter)
         {
             KeyConverter = keyConverter;
             ValueConverter = valueConverter;

@@ -18,6 +18,7 @@ namespace Ao.Middleware.DataWash
             mapData = new PoolMapDataProvider<TKey, TValue>();
             datasProviders = new PooledList<IDatasProvider<TKey, TValue>>();
             Add(mapData);
+            DatasProviders.Add(new RangeDatasProvider<TKey, TValue>(new IDataProvider<TKey, TValue>[] { this }));
         }
         protected readonly PoolMapDataProvider<TKey, TValue> mapData;
         protected readonly PooledList<IDatasProvider<TKey, TValue>> datasProviders;

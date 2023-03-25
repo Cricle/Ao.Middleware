@@ -5,7 +5,7 @@ namespace Ao.Middleware.Csv
 {
     public class CsvDataProvider<TKey, TValue> : DatasProviderCapturer<TKey, TValue>, IDatasProvider<TKey, TValue>
     {
-        public CsvDataProvider(ICsvDataConverter<TKey, TValue> dataConverter,IReader csvReader, INamedInfo? name, bool capture)
+        public CsvDataProvider(IStringObjectDataConverter<TKey, TValue> dataConverter,IReader csvReader, INamedInfo? name, bool capture)
             : base(name,capture)
         {
             CsvReader = csvReader;
@@ -14,7 +14,7 @@ namespace Ao.Middleware.Csv
 
         public IReader CsvReader { get; }
 
-        public ICsvDataConverter<TKey, TValue> DataConverter { get; }          
+        public IStringObjectDataConverter<TKey, TValue> DataConverter { get; }          
 
         protected override void OnDispose()
         {

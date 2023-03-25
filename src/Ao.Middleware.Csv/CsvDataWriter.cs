@@ -5,13 +5,13 @@ namespace Ao.Middleware.Csv
 {
     public class CsvDataWriter<TKey, TValue>
     {
-        public CsvDataWriter(ICsvDataConverter<TKey, TValue> dataConverter, IWriter writer)
+        public CsvDataWriter(IStringObjectDataConverter<TKey, TValue> dataConverter, IWriter writer)
         {
             DataConverter = dataConverter;
             Writer = writer;
         }
 
-        public ICsvDataConverter<TKey, TValue> DataConverter { get; }
+        public IStringObjectDataConverter<TKey, TValue> DataConverter { get; }
 
         public IWriter Writer { get; }
 

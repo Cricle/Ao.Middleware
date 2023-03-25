@@ -1,8 +1,6 @@
-﻿using Ao.Middleware.DataWash;
-
-namespace Ao.Middleware.Csv
+﻿namespace Ao.Middleware.DataWash
 {
-    public interface ICsvDataConverter<TKey,TValue>
+    public interface IStringObjectDataConverter<TKey, TValue>
     {
         IDataConverter<string, TKey> KeyConverter { get; }
 

@@ -1,8 +1,6 @@
 ﻿using Ao.Middleware.DataWash.Streaming;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-
 namespace Ao.Middleware.DataWash
 {
     public static class EnumerableDataStreamBoxExtensions
@@ -16,18 +14,6 @@ namespace Ao.Middleware.DataWash
         }
         public static IEnumerable<DataStreamBox<TKey, TValue>> EnumerableStreamBox<TKey, TValue>(this IDataProviderCollection<TKey, TValue> datasProvider, Func<IDataProvider<TKey, TValue>, bool>? condition = null)
         {
-            var ann = datasProvider.DataProviders.AsEnumerable();
-            if (condition!=null)
-            {
-                ann = ann.Where(condition);
-            }
-            foreach (var item in ann)
-            {
-                foreach (var v in EnumerableStreamBox(item,null))
-                {
-                    yield return v;
-                }
-            }
             foreach (var item in datasProvider.DatasProviders)
             {
                 foreach (var s in EnumerableStreamBox(item,condition))

@@ -12,7 +12,7 @@ namespace Ao.Middleware.Samples.Flows
         static void Main(string[] args)
         {
             var builder = new SyncMiddlewareBuilder<IWashContext<string,object?,object?>>();
-            builder.UseCsv(CsvDataConverter.Instance,
+            builder.UseCsv(StringObjectDataConverter.Instance,
                     Path.Combine(AppContext.BaseDirectory, "Res", "a.csv"),
                     new NamedInfo("csv"))
                 .Use(x => x.Outputs.DatasProviders.Add(x.Inputs.DatasProviders[0]));
@@ -27,7 +27,7 @@ namespace Ao.Middleware.Samples.Flows
                     handler(ctx);
                     var s = new StringBuilder();
                     var wt = new CsvWriter(new StringWriter(s), CultureInfo.CurrentCulture);
-                    var q = new CsvDataWriter<string, object?>(CsvDataConverter.Instance, wt);
+                    var q = new CsvDataWriter<string, object?>(StringObjectDataConverter.Instance, wt);
                     q.WriteAsync(ctx.Outputs.DatasProviders[0]).GetAwaiter().GetResult();
                     Console.WriteLine(s);
                 }
