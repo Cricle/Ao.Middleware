@@ -22,7 +22,7 @@ namespace Ao.Middleware.Csv
             return datas.Keys.ToArray();
         }
 
-        public Task WriteAsync(IDatasProvider<TKey, TValue> datas)
+        public Task WriteAsync(IDatasProvider<TKey, TValue> datas, CancellationToken token = default)
         {
             var val = datas.Read();
             if (val==null)
@@ -37,9 +37,11 @@ namespace Ao.Middleware.Csv
                     Writer.WriteField(item);
                 }
                 Writer.NextRecord();
+                token.ThrowIfCancellationRequested();
             }
             while (val != null)
             {
+                token.ThrowIfCancellationRequested();
                 foreach (var item in head)
                 {
                     if (val.TryGetValue(item,out var v))
