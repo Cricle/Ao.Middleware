@@ -11,7 +11,7 @@ namespace Ao.Middleware.DataWash
 
         public string? Name { get; }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is NamedInfo info)
             {

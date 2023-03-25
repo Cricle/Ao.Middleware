@@ -22,7 +22,7 @@ namespace Ao.Middleware.Samples.Flows
             var sw = Stopwatch.GetTimestamp();
             for (int i = 0; i < 1; i++)
             {
-                using (var ctx = new WashContext<string,object?,object?>())
+                using (var ctx = new WashContext<string>())
                 {
                     handler(ctx);
                     var s = new StringBuilder();

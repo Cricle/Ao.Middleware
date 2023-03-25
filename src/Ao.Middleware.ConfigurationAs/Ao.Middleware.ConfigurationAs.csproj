@@ -4,9 +4,9 @@
 		<TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Collections.Pooled" Version="1.0.82" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-		<PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
+	<ItemGroup>
+	  <ProjectReference Include="..\Ao.Middleware.DataWash\Ao.Middleware.DataWash.csproj" />
 	</ItemGroup>
 </Project>
