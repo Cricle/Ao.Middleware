@@ -8,5 +8,8 @@ namespace Ao.Middleware.Csv
 
         IDataConverter<object?, TValue> ValueConverter { get; }
 
+        IDataConverter<TKey, string> StringConverter { get; }
+
+        IDataConverter<TValue, object?> ObjectConverter { get; }
     }
 }
