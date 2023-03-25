@@ -7,6 +7,11 @@ namespace Ao.Middleware.Csv
 {
     public static class CsvWashContextExtensions
     {
+        public static IMiddlewareBuilder<IWashContext<TKey, TValue, TOutput>> UseCsv<TKey, TValue, TOutput>(this IMiddlewareBuilder<IWashContext<TKey, TValue, TOutput>> builder,
+            ICsvDataConverter<TKey, TValue> dataConverter, string filePath, INamedInfo? named, bool capture = false)
+        {
+            return builder.Use(context => AddCsv(context, dataConverter, filePath, named, capture));
+        }
         public static ISyncMiddlewareBuilder<IWashContext<TKey, TValue, TOutput>> UseCsv<TKey, TValue, TOutput>(this ISyncMiddlewareBuilder<IWashContext<TKey, TValue, TOutput>> builder,
             ICsvDataConverter<TKey, TValue> dataConverter, string filePath, INamedInfo? named, bool capture = false)
         {

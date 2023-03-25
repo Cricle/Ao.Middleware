@@ -1,4 +1,6 @@
-﻿namespace Ao.Middleware.DataWash
+﻿using System;
+
+namespace Ao.Middleware.DataWash
 {
     public class EmptyDataConverter<T>: IDataConverter<T,T>
     {
