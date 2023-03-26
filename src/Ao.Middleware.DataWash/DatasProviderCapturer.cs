@@ -10,10 +10,10 @@ namespace Ao.Middleware.DataWash
         {
             Name = name;
             Capture = capture;
-            captureDatasProvider = capture ? new DefaultDatasProvider<TKey, TValue>() : null;
+            captureDatasProvider = capture ? new DataProviderGroup<TKey, TValue>() : null;
         }
 
-        protected readonly DefaultDatasProvider<TKey, TValue>? captureDatasProvider;
+        protected readonly DataProviderGroup<TKey, TValue>? captureDatasProvider;
         protected IDatasProvider<TKey, TValue>? current;
 
         public bool Capture { get; }

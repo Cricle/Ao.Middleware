@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Ao.Middleware.DataWash
 {
-    public class DataProviderGroup<TKey, TValue> : PooledList<IDataProvider<TKey, TValue>>, IDataProvider<TKey, TValue>, IDataProviderCollection<TKey, TValue>, IDisposable
+    public class DataProviderGroup<TKey, TValue> : PooledList<IDataProvider<TKey, TValue>>, IDataProvider<TKey, TValue>, IDataProviderCollection<TKey, TValue>, IDatasProvider<TKey,TValue>, IDisposable
     {
         public DataProviderGroup()
             : this(null)
@@ -15,12 +15,8 @@ namespace Ao.Middleware.DataWash
         public DataProviderGroup(INamedInfo? name)
         {
             Name = name;
-            mapData = new PoolMapDataProvider<TKey, TValue>();
             datasProviders = new PooledList<IDatasProvider<TKey, TValue>>();
-            Add(mapData);
-            DatasProviders.Add(new RangeDatasProvider<TKey, TValue>(new IDataProvider<TKey, TValue>[] { this }));
         }
-        protected readonly PoolMapDataProvider<TKey, TValue> mapData;
         protected readonly PooledList<IDatasProvider<TKey, TValue>> datasProviders;
 
         public TValue this[TKey key]
@@ -43,11 +39,7 @@ namespace Ao.Middleware.DataWash
         public IEnumerable<TValue> Values =>
             Enumerable.SelectMany<IDataProvider<TKey, TValue>, TValue>(this, x => x.Values);
 
-        public IList<IDataProvider<TKey, TValue>> DataProviders => this;
-
         public IList<IDatasProvider<TKey, TValue>> DatasProviders => datasProviders;
-
-        public IDictionary<TKey, TValue> MapData => mapData;
 
         public bool ContainsKey(TKey key)
         {
@@ -86,7 +78,6 @@ namespace Ao.Middleware.DataWash
                 item.Dispose();
             }
             datasProviders.Dispose(); 
-            mapData.Dispose();
         }
     }
 }
