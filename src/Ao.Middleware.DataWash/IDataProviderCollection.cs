@@ -1,9 +1,0 @@
-﻿using System.Collections.Generic;
-
-namespace Ao.Middleware.DataWash
-{
-    public interface IDataProviderCollection<TKey, TValue>
-    {
-        IList<IDatasProvider<TKey, TValue>> DatasProviders { get; }
-    }
-}
