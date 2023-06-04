@@ -25,12 +25,7 @@ namespace Ao.Middleware.DataWash
 
         public static IEnumerable<DataStreamBox<TKey, TValue>> EnumerableStreamBox<TKey, TValue>(this IDatasProvider<TKey, TValue> datasProvider, Func<IDataProvider<TKey, TValue>, bool>? condition = null)
         {
-            var v = datasProvider.Read();
-            if (v == null)
-            {
-                yield break;
-            }
-            while (v != null)
+            foreach (var v in datasProvider)
             {
                 if (condition != null && condition(v))
                 {
@@ -39,7 +34,6 @@ namespace Ao.Middleware.DataWash
                         yield return item;
                     }
                 }
-                v = datasProvider.Read();
             }
         }
     }

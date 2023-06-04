@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ao.Middleware.DataWash
@@ -46,6 +48,10 @@ namespace Ao.Middleware.DataWash
         public virtual IDataProvider<TKey, TValue>? AddCaptureDataProvider(IEnumerable<TKey> keys, IEnumerable<TValue> values)
         {
             var m = CastCaptureDataProvider(keys, values);
+            if (m==null)
+            {
+                return null;
+            }
             return AddCaptureDataProvider(m);
         }
         public virtual IDataProvider<TKey, TValue>? AddCaptureDataProvider(IDataProvider<TKey, TValue> dataProvider)
@@ -97,6 +103,20 @@ namespace Ao.Middleware.DataWash
         {
             DisposeCurrent();
             return true;
+        }
+
+        public IEnumerator<IDataProvider<TKey, TValue>> GetEnumerator()
+        {
+            if (captureDatasProvider!=null)
+            {
+                return new List<IDataProvider<TKey, TValue>>(1) { captureDatasProvider }.GetEnumerator();
+            }
+            return Enumerable.Empty<IDataProvider<TKey, TValue>>().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
